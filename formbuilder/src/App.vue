@@ -1,5 +1,6 @@
 <script setup>
-  import FormBuilder from './views/FormBuilder.vue';
+import FormBuilder from './views/FormBuilder.vue';
+
 </script>
 
 <template>
@@ -7,7 +8,7 @@
 </template>
 
 <style scoped>
-body{
+body {
   display: unset;
   place-items: unset;
 }
