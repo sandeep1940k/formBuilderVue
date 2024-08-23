@@ -3,11 +3,23 @@ import { ref } from 'vue'
 import Fields from './Fields.vue';
 import Elements from './Elements.vue';
 import Layouts from './Layouts.vue';
+import Container from './Container.vue';
 
 const activeTab = ref('Fields');
+const container = ref([]);
+
 const manageActiveTab = (tab) => {
   activeTab.value = tab;
 }
+const manageContainer = (value) => {
+  container.value.push(value);
+}
+
+const components = {
+  Fields,
+  Elements,
+  Layouts
+};
 </script>
 
 <template>
@@ -19,19 +31,11 @@ const manageActiveTab = (tab) => {
         <div :class="['tab', { active: activeTab === 'Elements' }]" @click="manageActiveTab('Elements')">Elements</div>
         <div :class="['tab', { active: activeTab === 'Layouts' }]" @click="manageActiveTab('Layouts')">Layouts</div>
       </div>
-      <div>
-        <div v-if="activeTab == 'Fields'">
-          <Fields />
-        </div>
-        <div v-else-if="activeTab == 'Elements'">
-          <Elements />
-        </div>
-        <div v-else-if="activeTab == 'Layouts'">
-          <Layouts />
-        </div>
-      </div>
+      <component :is="components[activeTab]" @manage-container="manageContainer" />
     </div>
-    <div class="middle-side"></div>
+    <div class="middle-side">
+      <Container :container="container"/>
+    </div>
     <div class="right-side"></div>
   </div>
 </template>
@@ -54,7 +58,7 @@ const manageActiveTab = (tab) => {
 
 .left-side {
   width: 40rem;
-  background-color: #f0f0f0;
+  background-color: #5f5b5b;
   padding: 20px;
   margin: 4px;
   border-radius: 10px;
@@ -66,7 +70,6 @@ const manageActiveTab = (tab) => {
   justify-content: space-between;
   background-color: gray;
   font-size: 20px;
-  border-radius: 10px;
 }
 
 .tab {
@@ -75,20 +78,18 @@ const manageActiveTab = (tab) => {
 }
 
 .tab:hover {
-  border-radius: 10px;
-  background-color: black;
+  background-color: rgb(68, 68, 68);
   cursor: pointer;
 }
 
 .tab.active {
-  border-radius: 10px;
   background-color: black;
   cursor: pointer;
 }
 
 .middle-side {
   width: 100%;
-  background-color: #f0f0f0;
+  background-color: #5f5b5b;
   padding: 20px;
   margin: 4px;
   border-radius: 10px;
@@ -98,7 +99,7 @@ const manageActiveTab = (tab) => {
 
 .right-side {
   width: 40rem;
-  background-color: #f0f0f0;
+  background-color: #5f5b5b;
   padding: 20px;
   margin: 4px;
   border-radius: 10px;
